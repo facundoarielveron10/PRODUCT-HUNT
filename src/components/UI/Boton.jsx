@@ -17,7 +17,6 @@ const Boton = ({ bgColor, children }) => {
 
     return <Button>{children}</Button>;
 };
-
 // --------------------------- //
 
 // ---- EXPORTACIONES ---- //
