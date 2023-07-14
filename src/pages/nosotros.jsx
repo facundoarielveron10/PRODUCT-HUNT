@@ -10,12 +10,12 @@ import Layout from '@/components/Layout/Layout';
 
 // ---- PAGINA (NOSOTROS) ---- //
 export default function Nosotros() {
-    return (
-        <div>
-            <Layout title="Nosotros">
-                <h1>Nosotros</h1>
-            </Layout>
-        </div>
-    );
+	return (
+		<div>
+			<Layout title="Nosotros">
+				<h1>Nosotros</h1>
+			</Layout>
+		</div>
+	);
 }
 // ------------------------- //
