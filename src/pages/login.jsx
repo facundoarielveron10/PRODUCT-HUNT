@@ -4,11 +4,16 @@ import firebase from '@/firebase';
 import useValidacion from '@/hooks/useValidacion';
 import validarIniciarSesion from '@/validation/ValidarIniciarSesion';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import Router from 'next/router';
 import { formatearError } from '@/helpers/utilities';
 import Layout from '@/components/Layout/Layout';
-import { Formulario, Campo, InputSubmit } from '@/components/UI/Formulario';
+import {
+    Formulario,
+    Campo,
+    InputSubmit,
+    Alerta,
+    Error,
+} from '@/components/UI/Formulario';
 // ----------------------- //
 
 // ---- ESTADOS INICIALES ---- //
@@ -16,32 +21,6 @@ const STATE_INICIAL = {
     email: '',
     password: '',
 };
-// --------------------------- //
-
-// ---- STYLES COMPONENTS ---- //
-const Alerta = styled.p`
-    display: flex;
-    justify-content: flex-end;
-    text-transform: uppercase;
-    font-size: small;
-    font-weight: bold;
-    font-family: 'PT Sans', sans-serif;
-    color: #e70606;
-`;
-
-const Error = styled.p`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-size: medium;
-    font-weight: bold;
-    font-family: 'PT Sans', sans-serif;
-    color: #ffffff;
-    background-color: #e70606;
-`;
 // --------------------------- //
 
 // ---- PAGINA (INICIAR SESION) ---- //
