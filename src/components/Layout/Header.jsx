@@ -1,5 +1,6 @@
 // ---- IMPORTACIONES ---- //
-import React from 'react';
+import React, { useContext } from 'react';
+import { FirebaseContext } from '@/firebase';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import Link from 'next/link';
@@ -36,9 +37,9 @@ const Logo = styled.p`
 
 // ---- COMPONENTE (HEADER) ---- //
 export default function Header() {
-    // ---- DATOS ---- //
-    const usuario = false;
-    // --------------- //
+    // ---- CONTEXTs ---- //
+    const { usuario, firebase } = useContext(FirebaseContext);
+    // ------------------ //
 
     return (
         <header
@@ -95,10 +96,19 @@ export default function Header() {
                                     margin-right: 2rem;
                                 `}
                             >
-                                Hola: Facundo
+                                Hola: {usuario?.displayName}
                             </p>
                             {/* Cerrar Sesion */}
-                            <Boton bgColor={true}>Cerrar Sesion</Boton>
+                            <button
+                                css={css`
+                                    border: none;
+                                    padding: 0;
+                                    margin: 0;
+                                `}
+                                onClick={() => firebase.cerrarSesion()}
+                            >
+                                <Boton bgColor={true}>Cerrar Sesion</Boton>
+                            </button>
                         </>
                     ) : (
                         <>

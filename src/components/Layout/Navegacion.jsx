@@ -1,5 +1,6 @@
 // ---- IMPORTACIONES ---- //
-import React from 'react';
+import React, { useContext } from 'react';
+import { FirebaseContext } from '@/firebase';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 // ----------------------- //
@@ -25,12 +26,16 @@ const Nav = styled.nav`
 
 // ---- COMPONENTE (NAVEGACION) ---- //
 export default function Navegacion() {
+    // ---- CONTEXTs ---- //
+    const { usuario } = useContext(FirebaseContext);
+    // ------------------ //
+
     return (
         <Nav>
             {/* Enlaces */}
             <Link href="/">Inicio</Link>
             <Link href="/populares">Populares</Link>
-            <Link href="/nuevo-producto">Nuevo Producto</Link>
+            {usuario && <Link href="/nuevo-producto">Nuevo Producto</Link>}
         </Nav>
     );
 }
