@@ -3,6 +3,7 @@ import app from 'firebase/compat/app';
 import firebaseConfig from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 // ----------------------- //
 
 // ---- FIREBASE ---- //
@@ -14,6 +15,7 @@ class Firebase {
         }
         this.auth = app.auth();
         this.db = app.firestore();
+        this.storage = app.storage();
     }
 
     // REGISTRO DE UN USUARIO

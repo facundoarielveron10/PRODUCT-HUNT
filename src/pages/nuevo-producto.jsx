@@ -20,7 +20,6 @@ import {
 const STATE_INICIAL = {
     nombre: '',
     empresa: '',
-    // imagen: '',
     url: '',
     descripcion: '',
 };
@@ -35,6 +34,7 @@ export default function NuevoProducto() {
     // ---- ESTADOS ---- //
     const [submit, setSubmit] = useState(false);
     const [error, setError] = useState('');
+    const [imagen, setImagen] = useState(null);
     // ----------------- //
 
     // ---- ROUTING ---- //
@@ -53,6 +53,7 @@ export default function NuevoProducto() {
             nombre,
             empresa,
             url,
+            imagenUrl: await handleUpload(),
             descripcion,
             votos: 0,
             comentarios: [],
@@ -60,7 +61,21 @@ export default function NuevoProducto() {
         };
 
         // INSERTARLO EN LA BASE DE DATOS
-        firebase.db.collection('productos').add(producto);
+        await firebase.db.collection('productos').add(producto);
+    };
+
+    const handleFile = (e) => {
+        if (e.target.files[0]) {
+            setImagen(e.target.files[0]);
+        }
+    };
+
+    const handleUpload = async () => {
+        const subirTarea = await firebase.storage
+            .ref(`productos/${imagen.lastModified}${imagen.name}`)
+            .put(imagen);
+        const downloadURL = await subirTarea.ref.getDownloadURL();
+        return downloadURL;
     };
     // ------------------- //
 
@@ -70,7 +85,7 @@ export default function NuevoProducto() {
     // --------------- //
 
     // ---- DATOS ---- //
-    const { nombre, empresa, imagen, url, descripcion } = valores;
+    const { nombre, empresa, url, descripcion } = valores;
     // --------------- //
 
     return (
@@ -130,21 +145,20 @@ export default function NuevoProducto() {
                                 />
                             </Campo>
                             {/* Alerta de Imagen */}
-                            {/* {errores.imagen && (
+                            {errores.imagen && (
                                 <Alerta>{errores?.imagen}</Alerta>
-                            )} */}
+                            )}
                             {/* Imagen del Producto */}
-                            {/* <Campo>
+                            <Campo>
                                 <label htmlFor="imagen">Imagen</label>
                                 <input
                                     id="imagen"
                                     type="file"
+                                    accept="image/*"
                                     name="imagen"
-                                    value={imagen}
-                                    onChange={handleChange}
-                                    onBlur={submit ? handleBlur : null}
+                                    onInput={(e) => handleFile(e)}
                                 />
-                            </Campo> */}
+                            </Campo>
                             {/* Alerta de URL */}
                             {errores.url && <Alerta>{errores?.url}</Alerta>}
                             {/* URL del Producto */}
