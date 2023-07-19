@@ -8,37 +8,37 @@ import 'firebase/compat/storage';
 
 // ---- FIREBASE ---- //
 class Firebase {
-    // CONSTRUCTOR
-    constructor() {
-        if (!app.apps.length) {
-            app.initializeApp(firebaseConfig);
-        }
-        this.auth = app.auth();
-        this.db = app.firestore();
-        this.storage = app.storage();
-    }
+	// CONSTRUCTOR
+	constructor() {
+		if (!app.apps.length) {
+			app.initializeApp(firebaseConfig);
+		}
+		this.auth = app.auth();
+		this.db = app.firestore();
+		this.storage = app.storage();
+	}
 
-    // REGISTRO DE UN USUARIO
-    async registrar(nombre, email, password) {
-        const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(
-            email,
-            password
-        );
+	// REGISTRO DE UN USUARIO
+	async registrar(nombre, email, password) {
+		const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(
+			email,
+			password,
+		);
 
-        return await nuevoUsuario.user.updateProfile({
-            displayName: nombre,
-        });
-    }
+		return await nuevoUsuario.user.updateProfile({
+			displayName: nombre,
+		});
+	}
 
-    // INICIAR SESION
-    async login(email, password) {
-        return await this.auth.signInWithEmailAndPassword(email, password);
-    }
+	// INICIAR SESION
+	async login(email, password) {
+		return await this.auth.signInWithEmailAndPassword(email, password);
+	}
 
-    // CERRAR SESION
-    async cerrarSesion() {
-        await this.auth.signOut();
-    }
+	// CERRAR SESION
+	async cerrarSesion() {
+		await this.auth.signOut();
+	}
 }
 
 const firebase = new Firebase();
