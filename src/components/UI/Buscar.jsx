@@ -1,5 +1,6 @@
 // ---- IMPORTACIONES ---- //
-import React from 'react';
+import React, { useState } from 'react';
+import Router from 'next/router';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 // ----------------------- //
@@ -30,13 +31,39 @@ const InputSubmit = styled.button`
 
 // ---- COMPONENTE (BUSCAR) ---- //
 export default function Buscar() {
+    // ---- ESTADOS ---- //
+    const [busqueda, setBusqueda] = useState('');
+    // ----------------- //
+
+    // ---- FUNCIONES ---- //
+    const buscarProducto = (e) => {
+        e.preventDefault();
+
+        // Validar que el usuario busque algo
+        if (busqueda.trim() === '') return;
+
+        // Redireccionar a la pagina de buscar
+        Router.push({
+            pathname: '/buscar',
+            query: {
+                q: busqueda,
+            },
+        });
+    };
+    // ------------------- //
+
     return (
         <form
             css={css`
                 position: relative;
             `}
+            onSubmit={buscarProducto}
         >
-            <InputText type="text" placeholder="Buscar Productos" />
+            <InputText
+                type="text"
+                placeholder="Buscar Productos"
+                onChange={(e) => setBusqueda(e.target.value)}
+            />
 
             <InputSubmit type="submit">Buscar</InputSubmit>
         </form>
